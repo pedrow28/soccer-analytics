@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Acer\projetos-git\soccer-analytics\venv_soccer_analytics\Lib\site-packages\botasaurus\browser_decorator.py", line 179, in run_task
+    result = func(driver, data)
+             ^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Acer\projetos-git\soccer-analytics\scrappers\scrapper_fbref.py", line 31, in scrapper_liga
+    df.columns = ['_'.join(col).strip() for col in df.columns.values]
+                                                   ^^
+UnboundLocalError: cannot access local variable 'df' where it is not associated with a value

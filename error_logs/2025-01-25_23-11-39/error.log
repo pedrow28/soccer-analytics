@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\Users\Acer\projetos-git\soccer-analytics\venv_soccer_analytics\Lib\site-packages\botasaurus\browser_decorator.py", line 179, in run_task
+    result = func(driver, data)
+             ^^^^^^^^^^^^^^^^^^
+  File "c:\Users\Acer\projetos-git\soccer-analytics\scrappers\scrapper_fbref.py", line 118, in scrapper_players
+    print(dict_players[:5])
+          ~~~~~~~~~~~~^^^^
+TypeError: 'NoneType' object is not subscriptable

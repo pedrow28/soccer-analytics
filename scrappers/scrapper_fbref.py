@@ -109,17 +109,59 @@ def scrapper_liga( driver: Driver, data: dict):
     df_dict =  novo_df.to_dict(orient='records')
     return players, df_dict
 
+@browser
+def scrapper_players(dict_players):
+    # Expressão regular para identificar o ID
+    pattern = re.compile(r"scout_full_\w+")  # "\w+" combina letras, números e "_" 
+    dataframes = []
+    print("Iniciando o scrapper dos jogadores...")
+    
+
+    for player in dict_players:
+        # Acessar o scouting_report
+        scouting_url = player['scouting_report']
+        
+        try:
+            df_stats = pd.read_html(scouting_url, attrs={"id": pattern}, header=1)[0]
+            dataframes.append(df_stats)
+            print(f"Relatório de {player['name']} processado com sucesso!")
+        except:
+            print(f"Erro ao acessar o relatório de {player['name']}")
+            continue
+
+    if dataframes:
+        final_df = pd.concat(dataframes, ignore_index=True)
+        print("Tabelas consolidadas com sucesso!")
+    else:
+        print("Nenhuma tabela válida foi processada.")
+
+    dicf_final_df = final_df.to_dict(orient='records')
+    return dicf_final_df
+
+
 
 
 #### RUN
 
 def main():
+
+    ## Liga
     players, df = scrapper_liga()
     df_pandas = pd.DataFrame(df)
     ## Salvar em CSV
     df_pandas.to_csv("data/liga.csv", index=False, encoding="utf-8")
+    df_pandas.to_excel("data/liga.xlsx", index=False)
     print(df_pandas.head())
+    print(players[:5])
+
+    ## Jogadores
+
+    player_sample = players[:5]
     
+    raw_df_players = scrapper_players(dict_players=player_sample)
+    df_players = pd.DataFrame(raw_df_players)
+    ## Salvar em CSV
+    df_players.to_csv("data/players.csv", index=False, encoding="utf-8")
 
 
 
